@@ -4,6 +4,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#include "protocolo_telemetria.h"
 
 static const char *TAG = "motor_node";
 
