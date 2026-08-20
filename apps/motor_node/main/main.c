@@ -5,6 +5,7 @@
 #include "esp_log.h"
 
 #include "protocolo_telemetria.h"
+#include "bsp_motor_node.h"
 
 static const char *TAG = "motor_node";
 
