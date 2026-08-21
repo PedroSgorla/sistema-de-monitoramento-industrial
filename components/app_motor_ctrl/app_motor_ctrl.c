@@ -1,3 +1,7 @@
+/**
+ * @file app_motor_ctrl.c
+ * @brief Driver para o controle do motor DC via PWM.
+ */
 #include "driver/ledc.h"
 #include "driver/gpio.h"
 #include "bsp_motor_node.h"
@@ -13,13 +17,20 @@
 
 static const char *TAG = "app_motor_ctrl";
 
+/**
+ * @brief Enumeração para representar o sentido de rotação do motor.
+ */
 typedef enum {
     SENTIDO_HORARIO = 0,
     SENTIDO_ANTIHORARIO = 1,
 } sentido_t;
 
-static sentido_t sentido_atual = SENTIDO_HORARIO;
 
+static sentido_t sentido_atual = SENTIDO_HORARIO; /* Sentido de rotação atual do motor */
+
+/**
+ * @brief Inicializa o periferico LEDC para controle de PWM do motor.
+ */
 static void ledc_init(void)
 {
     ledc_timer_config_t timer_cfg = {
@@ -44,6 +55,9 @@ static void ledc_init(void)
     ledc_channel_config(&channel_cfg);
 }
 
+/**
+ * @brief Inicializa os pinos GPIO para controle do motor.
+ */
 static void motor_gpio_init(void)
 {
     gpio_config_t io_cfg = {

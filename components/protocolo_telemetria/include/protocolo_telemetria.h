@@ -1,3 +1,7 @@
+/**
+ * @file protocolo_telemetria.h
+ * @brief Definição do protocolo de telemetria para comunicação CAN.
+ */
 #ifndef PROTOCOLO_TELEMETRIA_H
 #define PROTOCOLO_TELEMETRIA_H
 
