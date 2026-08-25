@@ -21,12 +21,12 @@ static const char *TAG = "app_motor_ctrl";
  * @brief Enumeração para representar o sentido de rotação do motor.
  */
 typedef enum {
-    SENTIDO_HORARIO = 0,
-    SENTIDO_ANTIHORARIO = 1,
-} sentido_t;
+    CLOCKWISE = 0,
+    COUNTERCLOCKWISE = 1,
+} direction_t;
 
 
-static sentido_t sentido_atual = SENTIDO_HORARIO; /* Sentido de rotação atual do motor */
+static direction_t current_direction = CLOCKWISE; /* Sentido de rotação atual do motor */
 
 /**
  * @brief Inicializa o periferico LEDC para controle de PWM do motor.
@@ -93,15 +93,15 @@ void app_motor_ctrl_set_command(int8_t duty_pct)
         duty_pct = -100;
     }
 
-    sentido_t novo_sentido = (duty_pct < 0) ? SENTIDO_ANTIHORARIO : SENTIDO_HORARIO;
+    direction_t new_direction = (duty_pct < 0) ? COUNTERCLOCKWISE : CLOCKWISE;
 
     int8_t magnitude = (duty_pct < 0) ? (int8_t)(-duty_pct) : duty_pct;
 
-    if(novo_sentido != sentido_atual) {
+    if(new_direction != current_direction) {
         ledc_set_duty(MOTOR_LEDC_MODE, MOTOR_LEDC_CHANNEL, 0);
         ledc_update_duty(MOTOR_LEDC_MODE, MOTOR_LEDC_CHANNEL);
 
-        if(novo_sentido == SENTIDO_HORARIO) {
+        if(new_direction == CLOCKWISE) {
             gpio_set_level(BSP_MOTOR_IN1_GPIO, 1);
             gpio_set_level(BSP_MOTOR_IN2_GPIO, 0);
         } else {
@@ -109,7 +109,7 @@ void app_motor_ctrl_set_command(int8_t duty_pct)
             gpio_set_level(BSP_MOTOR_IN2_GPIO, 1);
         }
 
-        sentido_atual = novo_sentido;
+        current_direction = new_direction;
     }
 
     uint32_t duty_ledc = ((uint32_t)magnitude * MOTOR_LEDC_DUTY_MAX) /100;
