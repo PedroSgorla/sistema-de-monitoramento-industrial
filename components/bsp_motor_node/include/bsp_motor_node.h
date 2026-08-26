@@ -20,7 +20,7 @@
 #define BSP_DS18B20_DATA_GPIO  10
 
 /* ---- ADC1 - ACS712 ----- */
-#define BSP_ADC_CORRENTE_GPIO  1
+#define BSP_ADC_CURRENT_GPIO  1
 
 /* ---- CAN/TWAI - SN65HVD230 ----- */
 #define BSP_CAN_TX_GPIO  4
